@@ -7,8 +7,8 @@ export default defineConfig({
   name: 'default',
   title: 'BetPro Network CMS',
 
-  projectId: 'ol4jd4aa', // You'll get this after creating a Sanity project
-  dataset: 'production',
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ol4jd4aa',
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
 
   basePath: '/studio',
 

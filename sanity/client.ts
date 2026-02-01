@@ -2,10 +2,10 @@ import { createClient } from 'next-sanity'
 import imageUrlBuilder from '@sanity/image-url'
 
 export const client = createClient({
-  projectId: 'ol4jd4aa', // You'll get this after creating a Sanity project
-  dataset: 'production',
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ol4jd4aa',
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   apiVersion: '2024-01-01',
-  useCdn: true, // Set to false if statically generating pages
+  useCdn: true,
 })
 
 const builder = imageUrlBuilder(client)
