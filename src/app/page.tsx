@@ -122,6 +122,67 @@ export default async function Home() {
       }
     ]
   }
+
+  // Individual Review Schemas for Testimonials
+  const review1Schema = {
+    "@context": "https://schema.org",
+    "@type": "Review",
+    "itemReviewed": {
+      "@type": "Organization",
+      "name": "BetPro Network"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Ahmed Khan"
+    },
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+    },
+    "reviewBody": "Best betting platform in Pakistan! Fast withdrawals and excellent customer support. I've been using BetPro for 2 years and never had any issues.",
+    "datePublished": "2024-12-15"
+  }
+
+  const review2Schema = {
+    "@context": "https://schema.org",
+    "@type": "Review",
+    "itemReviewed": {
+      "@type": "Organization",
+      "name": "BetPro Network"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Mohammed Al-Rashid"
+    },
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+    },
+    "reviewBody": "BetPro Network has the best odds for cricket betting. IPL and PSL betting experience is amazing. Highly recommended for UAE residents!",
+    "datePublished": "2025-01-10"
+  }
+
+  const review3Schema = {
+    "@context": "https://schema.org",
+    "@type": "Review",
+    "itemReviewed": {
+      "@type": "Organization",
+      "name": "BetPro Network"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Saad Malik"
+    },
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+    },
+    "reviewBody": "Instant ID creation and 24/7 WhatsApp support in Urdu is very helpful. Deposits and withdrawals are super fast. Trusted service!",
+    "datePublished": "2025-01-28"
+  }
   
   return (
     <main className="min-h-screen">
@@ -137,6 +198,18 @@ export default async function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(review1Schema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(review2Schema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(review3Schema) }}
       />
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
