@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'BetPro Network - Premium Betting ID Provider in Pakistan & Gulf Countries',
-  description: 'Get your BetPro ID for online cricket betting, football, casino, horse racing, and more. Trusted by thousands in Pakistan, UAE, Saudi Arabia, Qatar, and Gulf countries. 24/7 support available.',
+  description: 'Get your BetPro ID for online cricket betting, football, casino & more. Trusted by thousands in Pakistan, UAE, Saudi Arabia & Gulf. 24/7 support.',
   keywords: 'betpro, betpro id, online betting Pakistan, cricket betting, sports betting, casino online, betting id Pakistan, UAE betting, Gulf countries betting',
   authors: [{ name: 'BetPro Network' }],
   metadataBase: new URL('https://www.betpronetwork.com'),

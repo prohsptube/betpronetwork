@@ -18,8 +18,39 @@ async function getLatestPosts() {
 
 export default async function Home() {
   const latestPosts = await getLatestPosts()
+  
+  // Schema.org structured data for SEO
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "BetPro Network",
+    "url": "https://www.betpronetwork.com",
+    "logo": "https://www.betpronetwork.com/logo.png",
+    "description": "Premium betting ID provider serving Pakistan, UAE, Saudi Arabia, Qatar & Gulf countries. Cricket betting, football, casino, horse racing & more.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "PK"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+92-300-0539152",
+      "contactType": "Customer Service",
+      "availableLanguage": ["English", "Urdu"]
+    },
+    "sameAs": [
+      "https://www.facebook.com/betpronetwork",
+      "https://www.instagram.com/betpronetwork",
+      "https://twitter.com/betpronetwork"
+    ]
+  }
+  
   return (
     <main className="min-h-screen">
+      {/* Schema.org JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Hero Background Image */}
