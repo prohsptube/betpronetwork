@@ -87,7 +87,7 @@ export default function Home() {
                   Get Your BetPro ID Now
                 </a>
                 <p className="text-sm text-blue-200">
-                  WhatsApp us at <span className="font-semibold">+92 300 1234567</span>
+                  WhatsApp us at <span className="font-semibold">+92 300 0539 152</span>
                 </p>
               </div>
             </div>
@@ -223,7 +223,7 @@ export default function Home() {
               <p className="text-gray-700 font-semibold">Happy Customers</p>
             </div>
             <div className="bg-gradient-to-br from-green-50 to-cyan-50 rounded-xl p-6 text-center">
-              <div className="text-4xl font-bold text-green-600 mb-2">₨100</div>
+              <div className="text-4xl font-bold text-green-600 mb-2">₨500</div>
               <p className="text-gray-700 font-semibold">Minimum Deposit</p>
             </div>
             <div className="bg-gradient-to-br from-orange-50 to-red-50 rounded-xl p-6 text-center">
