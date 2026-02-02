@@ -73,7 +73,7 @@ export default async function BlogPage() {
     ...sanityPosts.map((post: any) => ({
       slug: post.slug.current,
       title: post.title,
-      excerpt: post.excerpt,
+      excerpt: post.excerpt || 'Read the full article for more details.',
       date: new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
       category: post.category || 'News',
       readTime: '5 min read',
