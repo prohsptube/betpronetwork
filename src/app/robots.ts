@@ -6,9 +6,9 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/admin/'],
+        disallow: ['/studio/', '/studio/*', '/api/'],
       },
     ],
-    sitemap: 'https://betpronetwork.com/sitemap.xml',
+    sitemap: 'https://www.betpronetwork.com/sitemap.xml',
   }
 }
