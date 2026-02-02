@@ -146,7 +146,7 @@ export default async function BlogPage() {
                     <h2 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-colors">
                       {post.title}
                     </h2>
-                    <p className="text-gray-600 mb-4 leading-relaxed">
+                    <p className="text-gray-600 mb-4 leading-relaxed line-clamp-3">
                       {post.excerpt}
                     </p>
                     <span className="text-purple-600 font-semibold inline-flex items-center gap-2">
