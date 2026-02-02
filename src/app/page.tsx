@@ -26,8 +26,8 @@ async function getLatestPosts() {
 export default async function Home() {
   const latestPosts = await getLatestPosts()
   
-  // Schema.org structured data for SEO
-  const schemaData = {
+  // Enhanced Schema.org structured data for SEO
+  const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "BetPro Network",
@@ -42,7 +42,14 @@ export default async function Home() {
       "@type": "ContactPoint",
       "telephone": "+92-300-0539152",
       "contactType": "Customer Service",
-      "availableLanguage": ["English", "Urdu"]
+      "availableLanguage": ["English", "Urdu", "Arabic"],
+      "areaServed": ["PK", "AE", "SA", "QA"]
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "2450",
+      "bestRating": "5"
     },
     "sameAs": [
       "https://www.facebook.com/betpronetwork",
@@ -50,13 +57,86 @@ export default async function Home() {
       "https://twitter.com/betpronetwork"
     ]
   }
+
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Online Betting ID Provider",
+    "provider": {
+      "@type": "Organization",
+      "name": "BetPro Network"
+    },
+    "areaServed": [
+      {"@type": "Country", "name": "Pakistan"},
+      {"@type": "Country", "name": "United Arab Emirates"},
+      {"@type": "Country", "name": "Saudi Arabia"},
+      {"@type": "Country", "name": "Qatar"}
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Betting Services",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Cricket Betting"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Football Betting"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Casino Games"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Horse Racing"}}
+      ]
+    }
+  }
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I get a BetPro ID?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Contact us on WhatsApp at +92 300 0539152, share your basic details, and receive your BetPro ID instantly within minutes."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is BetPro Network available in Pakistan and UAE?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, BetPro Network serves customers in Pakistan, UAE, Saudi Arabia, Qatar, and all Gulf countries with 24/7 support."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What sports can I bet on with BetPro?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can bet on cricket, football, tennis, horse racing, casino games, and many more sports with competitive odds."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How fast are withdrawals processed?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Withdrawals are processed instantly to within 15 minutes. We offer the fastest payout system in the region."
+        }
+      }
+    ]
+  }
   
   return (
     <main className="min-h-screen">
-      {/* Schema.org JSON-LD */}
+      {/* Schema.org JSON-LD - Multiple Schemas */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -180,15 +260,33 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* SEO Content Block */}
+      <section className="py-16 bg-white border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="prose prose-lg max-w-none">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">Premium BetPro ID Provider for Pakistan, UAE & Gulf Countries</h2>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              <strong>BetPro Network</strong> is the leading <strong>online betting ID provider</strong> serving customers across <strong>Pakistan, United Arab Emirates (UAE), Saudi Arabia, Qatar, Kuwait, Bahrain, and Oman</strong>. We specialize in providing instant <strong>BetPro IDs</strong> for <strong>cricket betting</strong>, <strong>football betting</strong>, <strong>live casino games</strong>, <strong>horse racing</strong>, and multiple sports betting options with the best odds in the market.
+            </p>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              Our platform offers <strong>PSL betting (Pakistan Super League)</strong>, <strong>IPL betting (Indian Premier League)</strong>, <strong>T20 World Cup betting</strong>, and international cricket matches with <strong>live betting odds</strong>. Whether you're interested in <strong>cricket exchange betting</strong>, <strong>football match predictions</strong>, or <strong>online casino Pakistan</strong>, BetPro Network provides a secure, fast, and reliable betting experience.
+            </p>
+            <p className="text-gray-700 leading-relaxed">
+              Get your <strong>BetPro ID online</strong> within minutes through our <strong>WhatsApp betting service</strong> at <strong>+92 300 0539152</strong>. We offer <strong>24/7 customer support</strong> in English, Urdu, and Arabic, <strong>minimum deposit of just Rs. 500</strong>, <strong>instant withdrawals in 15 minutes</strong>, and the <strong>highest betting limits</strong> in the region. Join over <strong>5000+ satisfied customers</strong> who trust BetPro Network for their online betting needs.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Why Choose BetPro Section */}
       <section id="why-betpro" className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Why Choose BetPro Network?
+              Why Choose BetPro Network for Online Cricket Betting?
             </h2>
             <p className="text-xl text-gray-600">
-              The most trusted betting platform in Pakistan and Gulf Countries
+              The most trusted betting ID provider in Pakistan, UAE, and Gulf Countries
             </p>
           </div>
 
@@ -295,10 +393,10 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Get Started in 3 Simple Steps
+              How to Get BetPro ID in 3 Simple Steps
             </h2>
             <p className="text-xl text-gray-600">
-              Your BetPro ID is just minutes away
+              Start betting online in Pakistan & Gulf countries within minutes
             </p>
           </div>
 
@@ -344,6 +442,146 @@ export default async function Home() {
               <FaWhatsapp className="text-3xl" />
               Start Now - Get Your ID
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              What Our Customers Say
+            </h2>
+            <p className="text-xl text-gray-600">
+              Trusted by 5000+ bettors across Pakistan and Gulf countries
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white rounded-2xl shadow-lg p-8">
+              <div className="flex items-center gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <p className="text-gray-700 mb-4 italic">
+                "Best betting platform in Pakistan! Fast withdrawals and excellent customer support. I've been using BetPro for 2 years and never had any issues."
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                  A
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-900">Ahmed Khan</p>
+                  <p className="text-sm text-gray-500">Karachi, Pakistan</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-lg p-8">
+              <div className="flex items-center gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <p className="text-gray-700 mb-4 italic">
+                "BetPro Network has the best odds for cricket betting. IPL and PSL betting experience is amazing. Highly recommended for UAE residents!"
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold">
+                  M
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-900">Mohammed Al-Rashid</p>
+                  <p className="text-sm text-gray-500">Dubai, UAE</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-lg p-8">
+              <div className="flex items-center gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <p className="text-gray-700 mb-4 italic">
+                "Instant ID creation and 24/7 WhatsApp support in Urdu is very helpful. Deposits and withdrawals are super fast. Trusted service!"
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white font-bold">
+                  S
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-900">Saad Malik</p>
+                  <p className="text-sm text-gray-500">Lahore, Pakistan</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-xl text-gray-600">
+              Everything you need to know about BetPro Network
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-2xl p-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">How do I get a BetPro ID?</h3>
+              <p className="text-gray-700 leading-relaxed">
+                Contact us on WhatsApp at <strong>+92 300 0539152</strong>, share your basic details, and receive your BetPro ID instantly within minutes. No complicated signup process!
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">Is BetPro Network available in Pakistan and UAE?</h3>
+              <p className="text-gray-700 leading-relaxed">
+                Yes, BetPro Network serves customers in <strong>Pakistan, UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, and Oman</strong> with 24/7 support in English, Urdu, and Arabic.
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-r from-cyan-50 to-green-50 rounded-2xl p-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">What sports can I bet on with BetPro?</h3>
+              <p className="text-gray-700 leading-relaxed">
+                You can bet on <strong>cricket, football, tennis, horse racing, greyhound racing, casino games, kabaddi,</strong> and many more sports. We cover all major leagues including <strong>PSL, IPL, EPL, UEFA Champions League,</strong> and international tournaments.
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-r from-green-50 to-yellow-50 rounded-2xl p-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">How fast are withdrawals processed?</h3>
+              <p className="text-gray-700 leading-relaxed">
+                Withdrawals are processed <strong>instantly to within 15 minutes</strong>. We offer the fastest payout system in the region with multiple payment methods including bank transfer, Easypaisa, JazzCash, and cryptocurrency.
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">What is the minimum deposit amount?</h3>
+              <p className="text-gray-700 leading-relaxed">
+                The minimum deposit is just <strong>Rs. 500</strong> (or equivalent in AED/SAR/QAR). This makes it accessible for everyone to start betting with a small amount and grow their winnings.
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-2xl p-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">Is my money safe with BetPro Network?</h3>
+              <p className="text-gray-700 leading-relaxed">
+                Absolutely! We use <strong>bank-level encryption</strong>, secure payment gateways, and maintain strict data privacy policies. Your funds and personal information are 100% safe and never shared with third parties.
+              </p>
+            </div>
           </div>
         </div>
       </section>

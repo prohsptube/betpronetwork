@@ -39,6 +39,21 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'BetPro Network - Premium Betting ID Provider',
+    description: 'Get your BetPro ID for cricket betting, football, casino & more. Trusted in Pakistan & Gulf countries.',
+    images: ['https://www.betpronetwork.com/logo.png'],
+    creator: '@betpronetwork',
+  },
+  alternates: {
+    canonical: 'https://www.betpronetwork.com',
+    languages: {
+      'en-US': 'https://www.betpronetwork.com',
+      'en-PK': 'https://www.betpronetwork.com',
+      'en-AE': 'https://www.betpronetwork.com',
+    },
+  },
   robots: {
     index: true,
     follow: true,
