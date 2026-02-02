@@ -1,8 +1,15 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaWhatsapp, FaFutbol, FaDice, FaHorse, FaTrophy, FaBaseballBall } from 'react-icons/fa'
 import { GiTennisRacket } from 'react-icons/gi'
 import { getAllBlogPosts, urlFor } from '../../sanity/client'
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: 'https://www.betpronetwork.com',
+  },
+}
 
 export const revalidate = 60
 
