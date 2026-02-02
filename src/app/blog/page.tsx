@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
 import { getAllBlogPosts } from '../../../sanity/client'
-import { urlFor } from '../../../sanity/client'
+import Breadcrumbs from '../../components/Breadcrumbs'
+import BlogGrid from '../../components/BlogGrid'
 
 export const metadata: Metadata = {
   title: 'Cricket News & Betting Tips - BetPro Network Blog',
@@ -13,11 +13,20 @@ export const metadata: Metadata = {
     description: 'Daily cricket news, match previews, and betting tips for Pakistan & Gulf countries',
     url: 'https://www.betpronetwork.com/blog',
     type: 'website',
+    images: [
+      {
+        url: 'https://www.betpronetwork.com/logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'BetPro Network Blog - Cricket News & Betting Tips',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Cricket News & Betting Tips - BetPro Network',
     description: 'Daily cricket news and betting tips',
+    images: ['https://www.betpronetwork.com/logo.png'],
   },
   alternates: {
     canonical: 'https://www.betpronetwork.com/blog',
@@ -97,83 +106,64 @@ export default async function BlogPage() {
     ...legacyBlogPosts,
   ]
 
+  // Schema.org structured data for blog page
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "BetPro Network Blog - Cricket News & Betting Tips",
+    "description": "Latest cricket news, match previews, betting tips, and expert analysis for Pakistan, UAE, and Gulf countries",
+    "url": "https://www.betpronetwork.com/blog",
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": allPosts.slice(0, 10).map((post, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "url": `https://www.betpronetwork.com/blog/${post.slug}`
+      }))
+    }
+  }
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      {/* Schema.org JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
+
       {/* Hero Section */}
       <section className="copilot-bg py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            BetPro Network Blog
-          </h1>
-          <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
-            Stay updated with latest cricket news, betting tips, match previews, and expert analysis
-          </p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Breadcrumbs items={[{ label: 'Blog', href: '/blog' }]} />
+          <div className="text-center text-white mt-8">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+              BetPro Network Blog
+            </h1>
+            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
+              Stay updated with latest cricket news, betting tips, match previews, and expert analysis
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* SEO Content Block */}
+      <section className="py-12 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="prose prose-lg max-w-none">
+            <p className="text-gray-700 leading-relaxed mb-4">
+              Welcome to the <strong>BetPro Network Blog</strong>, your ultimate source for cricket news, betting tips, and expert analysis in <strong>Pakistan, UAE, Saudi Arabia, Qatar, and Gulf countries</strong>. Our team of sports analysts provides daily updates on <strong>PSL (Pakistan Super League)</strong>, <strong>IPL (Indian Premier League)</strong>, <strong>T20 World Cup</strong>, and international cricket matches.
+            </p>
+            <p className="text-gray-700 leading-relaxed">
+              Whether you're looking for <strong>cricket betting strategies</strong>, <strong>match previews</strong>, <strong>player statistics</strong>, or <strong>casino betting guides</strong>, our blog covers everything you need to make informed betting decisions. Get access to <strong>expert betting tips</strong>, <strong>odds analysis</strong>, and <strong>live match predictions</strong> from seasoned professionals in the sports betting industry.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Blog Posts Grid */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {allPosts.map((post: any) => (
-              <Link 
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="group"
-              >
-                <article className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all transform hover:-translate-y-2">
-                  {post.coverImage ? (
-                    <div className="h-48 relative">
-                      <Image
-                        src={urlFor(post.coverImage).width(600).height(400).url()}
-                        alt={post.title}
-                        fill
-                        className="object-cover"
-                      />
-                      <div className="absolute top-4 left-4">
-                        <span className="inline-block bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold text-purple-600">
-                          {post.category}
-                        </span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="h-48 bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
-                      <div className="text-white text-center p-6">
-                        <span className="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold mb-3">
-                          {post.category}
-                        </span>
-                      </div>
-                    </div>
-                  )}
-                  <div className="p-6">
-                    <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
-                      <span>{post.date}</span>
-                      <span>•</span>
-                      <span>{post.readTime}</span>
-                      {post.isFromCMS && (
-                        <>
-                          <span>•</span>
-                          <span className="text-green-600 font-semibold">New</span>
-                        </>
-                      )}
-                    </div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-colors">
-                      {post.title}
-                    </h2>
-                    <p className="text-gray-600 mb-4 leading-relaxed line-clamp-3">
-                      {post.excerpt}
-                    </p>
-                    <span className="text-purple-600 font-semibold inline-flex items-center gap-2">
-                      Read Full Article
-                      <svg className="w-5 h-5 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
-                    </span>
-                  </div>
-                </article>
-              </Link>
-            ))}
-          </div>
+          <BlogGrid initialPosts={allPosts} />
         </div>
       </section>
 
