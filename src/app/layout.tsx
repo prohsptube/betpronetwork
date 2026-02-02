@@ -13,6 +13,16 @@ export const metadata: Metadata = {
   keywords: 'betpro, betpro id, online betting Pakistan, cricket betting, sports betting, casino online, betting id Pakistan, UAE betting, Gulf countries betting',
   authors: [{ name: 'BetPro Network' }],
   metadataBase: new URL('https://www.betpronetwork.com'),
+  icons: {
+    icon: [
+      { url: '/logo.png', sizes: '32x32', type: 'image/png' },
+      { url: '/logo.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/logo.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: '/logo.png',
+  },
   openGraph: {
     title: 'BetPro Network - Premium Betting ID Provider',
     description: 'Get your BetPro ID for cricket betting, football, casino, and more. Trusted service in Pakistan & Gulf countries.',
@@ -20,6 +30,14 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://www.betpronetwork.com',
     siteName: 'BetPro Network',
+    images: [
+      {
+        url: '/logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'BetPro Network',
+      },
+    ],
   },
   robots: {
     index: true,
