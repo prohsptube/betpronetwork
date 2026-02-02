@@ -1,18 +1,58 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FaWhatsapp, FaBook } from 'react-icons/fa'
+import Breadcrumbs from '../../../components/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Cricket Betting Guide for Beginners in Pakistan | BetPro Network',
   description: 'Complete beginner-friendly guide to cricket betting in Pakistan. Learn betting basics, terms, strategies, and how to get started safely.',
   keywords: 'cricket betting guide, betting for beginners Pakistan, how to bet on cricket, online betting Pakistan, betting tips beginners',
+  openGraph: {
+    title: 'Cricket Betting Guide for Beginners in Pakistan',
+    description: 'Complete beginner-friendly guide to cricket betting in Pakistan',
+    url: 'https://www.betpronetwork.com/blog/cricket-betting-guide-beginners',
+    type: 'article',
+    publishedTime: '2026-01-25',
+    images: [{ url: 'https://www.betpronetwork.com/logo.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Cricket Betting Guide for Beginners in Pakistan',
+    description: 'Complete beginner-friendly guide to cricket betting',
+    images: ['https://www.betpronetwork.com/logo.png'],
+  },
+  alternates: { canonical: 'https://www.betpronetwork.com/blog/cricket-betting-guide-beginners' },
 }
 
 export default function BeginnersGuidePage() {
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Cricket Betting Guide for Beginners in Pakistan",
+    "description": "New to cricket betting? This comprehensive guide covers everything from basic terms to advanced strategies for Pakistani bettors.",
+    "image": "https://www.betpronetwork.com/logo.png",
+    "datePublished": "2026-01-25",
+    "dateModified": "2026-01-25",
+    "author": { "@type": "Person", "name": "BetPro Network" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BetPro Network",
+      "logo": { "@type": "ImageObject", "url": "https://www.betpronetwork.com/logo.png" }
+    },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://www.betpronetwork.com/blog/cricket-betting-guide-beginners" },
+    "keywords": "cricket betting guide, betting for beginners Pakistan",
+    "articleSection": "Beginners Guide"
+  }
+  
   return (
     <main className="min-h-screen bg-white">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <Link href="/blog" className="text-purple-600 hover:text-purple-700 font-semibold mb-6 inline-flex items-center gap-2">
+        <Breadcrumbs items={[
+          { label: 'Blog', href: '/blog' },
+          { label: 'Cricket Betting Guide Beginners', href: '/blog/cricket-betting-guide-beginners' }
+        ]} />
+        <Link href="/blog" className="text-purple-600 hover:text-purple-700 font-semibold mb-6 inline-flex items-center gap-2 mt-6">
           ← Back to Blog
         </Link>
         

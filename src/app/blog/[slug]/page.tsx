@@ -1,15 +1,68 @@
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getBlogPostBySlug, urlFor } from '../../../../sanity/client'
 import { PortableText } from '@portabletext/react'
 import { FaWhatsapp } from 'react-icons/fa'
+import Breadcrumbs from '../../../components/Breadcrumbs'
 
 export const revalidate = 60
 
 interface PageProps {
   params: {
     slug: string
+  }
+}
+
+// Generate metadata for each blog post
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const post = await getBlogPostBySlug(params.slug)
+
+  if (!post) {
+    return {
+      title: 'Post Not Found - BetPro Network',
+    }
+  }
+
+  const pageUrl = `https://www.betpronetwork.com/blog/${params.slug}`
+  const imageUrl = post.coverImage 
+    ? urlFor(post.coverImage).width(1200).height(630).url()
+    : 'https://www.betpronetwork.com/logo.png'
+
+  return {
+    title: `${post.title} - BetPro Network Blog`,
+    description: post.excerpt || post.metaDescription || `Read ${post.title} on BetPro Network. Latest cricket news, betting tips, and expert analysis for Pakistan & Gulf countries.`,
+    keywords: post.tags?.join(', ') || 'cricket betting, online betting Pakistan, sports betting',
+    authors: [{ name: post.author || 'BetPro Network' }],
+    openGraph: {
+      title: post.title,
+      description: post.excerpt || post.metaDescription || 'Latest cricket news and betting tips',
+      url: pageUrl,
+      type: 'article',
+      publishedTime: post.publishedAt,
+      modifiedTime: post._updatedAt,
+      authors: [post.author || 'BetPro Network'],
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+      siteName: 'BetPro Network',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt || post.metaDescription || 'Latest cricket news and betting tips',
+      images: [imageUrl],
+      creator: '@betpronetwork',
+    },
+    alternates: {
+      canonical: pageUrl,
+    },
   }
 }
 
@@ -25,6 +78,35 @@ export default async function CMSBlogPost({ params }: PageProps) {
     month: 'long',
     day: 'numeric',
   })
+
+  // Article Schema for SEO
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.excerpt || post.metaDescription,
+    "image": post.coverImage ? urlFor(post.coverImage).width(1200).height(630).url() : "https://www.betpronetwork.com/logo.png",
+    "datePublished": post.publishedAt,
+    "dateModified": post._updatedAt || post.publishedAt,
+    "author": {
+      "@type": "Person",
+      "name": post.author || "BetPro Network"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BetPro Network",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.betpronetwork.com/logo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://www.betpronetwork.com/blog/${params.slug}`
+    },
+    "keywords": post.tags?.join(', '),
+    "articleSection": post.category || "Betting News"
+  }
 
   const components = {
     block: {
@@ -90,12 +172,23 @@ export default async function CMSBlogPost({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      {/* Article Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      
       {/* Hero Section */}
       <section className="copilot-bg py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Breadcrumbs items={[
+            { label: 'Blog', href: '/blog' },
+            { label: post.title, href: `/blog/${params.slug}` }
+          ]} />
+          
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-white hover:text-blue-200 transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-white hover:text-blue-200 transition-colors mb-8 mt-6"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />

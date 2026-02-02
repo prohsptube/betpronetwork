@@ -1,19 +1,78 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FaWhatsapp, FaBaseballBall } from 'react-icons/fa'
+import Breadcrumbs from '../../../components/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Pakistan vs India T20 Match Preview & Betting Tips | BetPro Network',
   description: 'Complete analysis and betting odds for Pakistan vs India T20 match. Expert predictions, team form, head-to-head stats, and best betting strategies.',
   keywords: 'Pakistan vs India, T20 betting, cricket betting tips, match preview, betting odds Pakistan',
+  openGraph: {
+    title: 'Pakistan vs India T20 Match Preview & Betting Tips',
+    description: 'Complete analysis and betting odds for Pakistan vs India T20 match. Expert predictions and betting strategies.',
+    url: 'https://www.betpronetwork.com/blog/pakistan-vs-india-t20-preview',
+    type: 'article',
+    publishedTime: '2026-02-01',
+    images: [{
+      url: 'https://www.betpronetwork.com/logo.png',
+      width: 1200,
+      height: 630,
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Pakistan vs India T20 Match Preview & Betting Tips',
+    description: 'Complete analysis and betting odds for Pakistan vs India T20 match',
+    images: ['https://www.betpronetwork.com/logo.png'],
+  },
+  alternates: {
+    canonical: 'https://www.betpronetwork.com/blog/pakistan-vs-india-t20-preview',
+  },
 }
 
 export default function ArticlePage() {
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Pakistan vs India T20 Match Preview & Betting Tips",
+    "description": "Complete analysis and betting odds for the upcoming Pakistan vs India T20 showdown. Expert predictions and tips for the biggest match of the year.",
+    "image": "https://www.betpronetwork.com/logo.png",
+    "datePublished": "2026-02-01",
+    "dateModified": "2026-02-01",
+    "author": {
+      "@type": "Person",
+      "name": "BetPro Network"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BetPro Network",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.betpronetwork.com/logo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.betpronetwork.com/blog/pakistan-vs-india-t20-preview"
+    },
+    "keywords": "Pakistan vs India, T20 betting, cricket betting tips, match preview",
+    "articleSection": "Match Preview"
+  }
+  
   return (
     <main className="min-h-screen bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      
       {/* Article Header */}
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <Link href="/blog" className="text-purple-600 hover:text-purple-700 font-semibold mb-6 inline-flex items-center gap-2">
+        <Breadcrumbs items={[
+          { label: 'Blog', href: '/blog' },
+          { label: 'Pakistan vs India T20 Preview', href: '/blog/pakistan-vs-india-t20-preview' }
+        ]} />
+        <Link href="/blog" className="text-purple-600 hover:text-purple-700 font-semibold mb-6 inline-flex items-center gap-2 mt-6">
           ← Back to Blog
         </Link>
         

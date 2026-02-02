@@ -1,18 +1,58 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FaWhatsapp, FaBaseballBall } from 'react-icons/fa'
+import Breadcrumbs from '../../../components/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'IPL Betting Tips for UAE & Gulf Countries | BetPro Network',
   description: 'Expert IPL betting strategies and tips for UAE, Saudi Arabia, Qatar, and Gulf countries. Get the best odds and winning strategies for Indian Premier League.',
   keywords: 'IPL betting UAE, cricket betting Gulf countries, IPL tips Dubai, betting Saudi Arabia, online betting Qatar',
+  openGraph: {
+    title: 'IPL Betting Tips for UAE & Gulf Countries',
+    description: 'Expert IPL betting strategies for UAE, Saudi Arabia, Qatar, and Gulf countries',
+    url: 'https://www.betpronetwork.com/blog/ipl-betting-tips-gulf-countries',
+    type: 'article',
+    publishedTime: '2026-01-28',
+    images: [{ url: 'https://www.betpronetwork.com/logo.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'IPL Betting Tips for UAE & Gulf Countries',
+    description: 'Expert IPL betting strategies for UAE and Gulf countries',
+    images: ['https://www.betpronetwork.com/logo.png'],
+  },
+  alternates: { canonical: 'https://www.betpronetwork.com/blog/ipl-betting-tips-gulf-countries' },
 }
 
 export default function IPLGulfPage() {
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "IPL Betting Tips for UAE & Gulf Countries",
+    "description": "Expert betting strategies for IPL matches with the best odds. Learn how to maximize your winnings on Indian Premier League.",
+    "image": "https://www.betpronetwork.com/logo.png",
+    "datePublished": "2026-01-28",
+    "dateModified": "2026-01-28",
+    "author": { "@type": "Person", "name": "BetPro Network" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BetPro Network",
+      "logo": { "@type": "ImageObject", "url": "https://www.betpronetwork.com/logo.png" }
+    },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://www.betpronetwork.com/blog/ipl-betting-tips-gulf-countries" },
+    "keywords": "IPL betting UAE, cricket betting Gulf countries, IPL tips",
+    "articleSection": "Betting Tips"
+  }
+  
   return (
     <main className="min-h-screen bg-white">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <Link href="/blog" className="text-purple-600 hover:text-purple-700 font-semibold mb-6 inline-flex items-center gap-2">
+        <Breadcrumbs items={[
+          { label: 'Blog', href: '/blog' },
+          { label: 'IPL Betting Tips Gulf Countries', href: '/blog/ipl-betting-tips-gulf-countries' }
+        ]} />
+        <Link href="/blog" className="text-purple-600 hover:text-purple-700 font-semibold mb-6 inline-flex items-center gap-2 mt-6">
           ← Back to Blog
         </Link>
         
