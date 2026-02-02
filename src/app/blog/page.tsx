@@ -8,6 +8,20 @@ export const metadata: Metadata = {
   title: 'Cricket News & Betting Tips - BetPro Network Blog',
   description: 'Read latest cricket news, match previews, betting tips, and expert analysis for Pakistan, UAE, and Gulf countries. Daily updates on PSL, IPL, T20, and more.',
   keywords: 'cricket news Pakistan, betting tips, PSL news, IPL betting, cricket analysis, sports news UAE',
+  openGraph: {
+    title: 'Cricket News & Betting Tips - BetPro Network Blog',
+    description: 'Daily cricket news, match previews, and betting tips for Pakistan & Gulf countries',
+    url: 'https://www.betpronetwork.com/blog',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Cricket News & Betting Tips - BetPro Network',
+    description: 'Daily cricket news and betting tips',
+  },
+  alternates: {
+    canonical: 'https://www.betpronetwork.com/blog',
+  },
 }
 
 export const revalidate = 60 // Revalidate every 60 seconds

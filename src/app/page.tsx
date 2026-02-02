@@ -2,8 +2,22 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FaWhatsapp, FaFutbol, FaDice, FaHorse, FaTrophy, FaBaseballBall } from 'react-icons/fa'
 import { GiTennisRacket } from 'react-icons/gi'
+import { getAllBlogPosts, urlFor } from '../../../sanity/client'
 
-export default function Home() {
+export const revalidate = 60
+
+async function getLatestPosts() {
+  try {
+    const posts = await getAllBlogPosts()
+    return posts.slice(0, 3)
+  } catch (error) {
+    console.error('Error fetching blog posts:', error)
+    return []
+  }
+}
+
+export default async function Home() {
+  const latestPosts = await getLatestPosts()
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
@@ -317,56 +331,35 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <Link href="/blog/pakistan-vs-india-t20-preview" className="group">
-              <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow">
-                <div className="h-48 bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center">
-                  <FaBaseballBall className="text-white text-6xl" />
+            {latestPosts.map((post: any) => (
+              <Link key={post._id} href={`/blog/${post.slug.current}`} className="group">
+                <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow">
+                  {post.coverImage ? (
+                    <div className="h-48 relative">
+                      <Image
+                        src={urlFor(post.coverImage).width(600).height(400).url()}
+                        alt={post.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="h-48 bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center">
+                      <FaBaseballBall className="text-white text-6xl" />
+                    </div>
+                  )}
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4 line-clamp-3">
+                      {post.excerpt || 'Read the full article for more details.'}
+                    </p>
+                    <span className="text-purple-600 font-semibold">Read More →</span>
+                  </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-colors">
-                    Pakistan vs India T20 Match Preview & Betting Tips
-                  </h3>
-                  <p className="text-gray-600 mb-4">
-                    Complete analysis and betting odds for the upcoming Pakistan vs India T20 showdown...
-                  </p>
-                  <span className="text-purple-600 font-semibold">Read More →</span>
-                </div>
-              </div>
-            </Link>
-
-            <Link href="/blog/psl-2026-betting-guide" className="group">
-              <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow">
-                <div className="h-48 bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center">
-                  <FaTrophy className="text-white text-6xl" />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-colors">
-                    PSL 2026 Complete Betting Guide for Pakistan
-                  </h3>
-                  <p className="text-gray-600 mb-4">
-                    Everything you need to know about betting on Pakistan Super League 2026...
-                  </p>
-                  <span className="text-purple-600 font-semibold">Read More →</span>
-                </div>
-              </div>
-            </Link>
-
-            <Link href="/blog/ipl-betting-tips-gulf-countries" className="group">
-              <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow">
-                <div className="h-48 bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
-                  <FaBaseballBall className="text-white text-6xl" />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-colors">
-                    IPL Betting Tips for UAE & Gulf Countries
-                  </h3>
-                  <p className="text-gray-600 mb-4">
-                    Expert betting strategies for IPL matches with the best odds...
-                  </p>
-                  <span className="text-purple-600 font-semibold">Read More →</span>
-                </div>
-              </div>
-            </Link>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
