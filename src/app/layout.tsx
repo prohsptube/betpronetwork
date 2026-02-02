@@ -12,11 +12,14 @@ export const metadata: Metadata = {
   description: 'Get your BetPro ID for online cricket betting, football, casino, horse racing, and more. Trusted by thousands in Pakistan, UAE, Saudi Arabia, Qatar, and Gulf countries. 24/7 support available.',
   keywords: 'betpro, betpro id, online betting Pakistan, cricket betting, sports betting, casino online, betting id Pakistan, UAE betting, Gulf countries betting',
   authors: [{ name: 'BetPro Network' }],
+  metadataBase: new URL('https://www.betpronetwork.com'),
   openGraph: {
     title: 'BetPro Network - Premium Betting ID Provider',
     description: 'Get your BetPro ID for cricket betting, football, casino, and more. Trusted service in Pakistan & Gulf countries.',
     type: 'website',
     locale: 'en_US',
+    url: 'https://www.betpronetwork.com',
+    siteName: 'BetPro Network',
   },
   robots: {
     index: true,
