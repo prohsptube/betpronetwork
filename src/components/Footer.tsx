@@ -82,7 +82,7 @@ export default function Footer() {
               </p>
               <div className="flex gap-4 pt-4">
                 <a 
-                  href="https://www.facebook.com/share/18qwM7r5js/?mibextid=wwXIfr" 
+                  href="https://www.facebook.com/share/1APHYSEAqp/?mibextid=wwXIfr" 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-blue-400 transition-colors"
