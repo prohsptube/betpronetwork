@@ -37,6 +37,7 @@ export async function getBlogPostBySlug(slug: string) {
   return client.fetch(
     `*[_type == "blogPost" && slug.current == $slug][0] {
       _id,
+      _updatedAt,
       title,
       slug,
       excerpt,

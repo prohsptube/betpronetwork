@@ -22,6 +22,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!post) {
     return {
       title: 'Post Not Found - BetPro Network',
+      robots: {
+        index: false,
+        follow: false,
+      },
     }
   }
 
@@ -30,14 +34,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? urlFor(post.coverImage).width(1200).height(630).url()
     : 'https://www.betpronetwork.com/logo.png'
 
+  // Use SEO fields from Sanity CMS if available, with intelligent fallbacks
+  const metaTitle = post.seo?.metaTitle || `${post.title} - BetPro Network Blog`
+  const metaDescription = post.seo?.metaDescription || post.excerpt || `Read ${post.title} on BetPro Network. Latest cricket news, betting tips, and expert analysis for Pakistan & Gulf countries.`
+  const keywords = post.seo?.keywords?.join(', ') || post.tags?.join(', ') || 'cricket betting, online betting Pakistan, sports betting'
+
   return {
-    title: `${post.title} - BetPro Network Blog`,
-    description: post.excerpt || post.metaDescription || `Read ${post.title} on BetPro Network. Latest cricket news, betting tips, and expert analysis for Pakistan & Gulf countries.`,
-    keywords: post.tags?.join(', ') || 'cricket betting, online betting Pakistan, sports betting',
+    title: metaTitle,
+    description: metaDescription,
+    keywords: keywords,
     authors: [{ name: post.author || 'BetPro Network' }],
     openGraph: {
-      title: post.title,
-      description: post.excerpt || post.metaDescription || 'Latest cricket news and betting tips',
+      title: post.seo?.metaTitle || post.title,
+      description: metaDescription,
       url: pageUrl,
       type: 'article',
       publishedTime: post.publishedAt,
@@ -52,16 +61,29 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         },
       ],
       siteName: 'BetPro Network',
+      locale: 'en_US',
     },
     twitter: {
       card: 'summary_large_image',
-      title: post.title,
-      description: post.excerpt || post.metaDescription || 'Latest cricket news and betting tips',
+      title: post.seo?.metaTitle || post.title,
+      description: metaDescription,
       images: [imageUrl],
       creator: '@betpronetwork',
+      site: '@betpronetwork',
     },
     alternates: {
       canonical: pageUrl,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
     },
   }
 }
@@ -79,12 +101,16 @@ export default async function CMSBlogPost({ params }: PageProps) {
     day: 'numeric',
   })
 
+  // Use SEO fields with intelligent fallbacks for schema
+  const schemaDescription = post.seo?.metaDescription || post.excerpt || `Read ${post.title} on BetPro Network`
+  const schemaKeywords = post.seo?.keywords?.join(', ') || post.tags?.join(', ')
+
   // Article Schema for SEO
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": post.title,
-    "description": post.excerpt || post.metaDescription,
+    "headline": post.seo?.metaTitle || post.title,
+    "description": schemaDescription,
     "image": post.coverImage ? urlFor(post.coverImage).width(1200).height(630).url() : "https://www.betpronetwork.com/logo.png",
     "datePublished": post.publishedAt,
     "dateModified": post._updatedAt || post.publishedAt,
@@ -104,8 +130,10 @@ export default async function CMSBlogPost({ params }: PageProps) {
       "@type": "WebPage",
       "@id": `https://www.betpronetwork.com/blog/${params.slug}`
     },
-    "keywords": post.tags?.join(', '),
-    "articleSection": post.category || "Betting News"
+    "keywords": schemaKeywords,
+    "articleSection": post.category || "Betting News",
+    "inLanguage": "en-US",
+    "url": `https://www.betpronetwork.com/blog/${params.slug}`
   }
 
   const components = {

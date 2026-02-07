@@ -45,14 +45,31 @@ projectId: 'abc123xy', // ← Paste your Project ID here
 
 Once you've added your Project ID:
 
-1. **Start the server:**
+### **PRODUCTION (Live Site) - RECOMMENDED:**
+
+**Open admin panel:**
+```
+https://www.betpronetwork.com/studio
+```
+
+**Login** with your Sanity account
+
+✅ **This is the URL you should use for managing blog posts!**
+
+---
+
+### **Development (Local Testing Only):**
+
+If you want to test locally before publishing:
+
+1. **Start the local server:**
    ```bash
    npm run dev
    ```
 
-2. **Open admin panel:**
+2. **Open local admin panel:**
    ```
-   http://localhost:3001/studio
+   http://localhost:3000/studio
    ```
 
 3. **Login** with your Sanity account
@@ -63,7 +80,7 @@ Once you've added your Project ID:
 
 ### From the Admin Panel:
 
-1. Go to http://localhost:3001/studio
+1. Go to https://www.betpronetwork.com/studio
 2. Click **"Blog Posts"** in the sidebar
 3. Click **"+ Create"** button
 4. Fill in:
@@ -118,15 +135,17 @@ Your existing blog posts are still file-based. You can:
 
 ## 📱 Admin Panel URL
 
-**Local Development:**
+**✅ Production (Use This for Managing Blog Posts):**
 ```
-http://localhost:3001/studio
+https://www.betpronetwork.com/studio
 ```
 
-**After Deployment** (e.g., Vercel):
+**Local Development (For Testing Only):**
 ```
-https://betpronetwork.com/studio
+http://localhost:3000/studio
 ```
+
+**Login:** Use your Sanity account (created at sanity.io)
 
 ---
 
@@ -247,9 +266,9 @@ Once you add your Project ID and create posts in CMS, you can:
 ### Common Issues:
 
 **Can't access /studio?**
-- Make sure `npm run dev` is running
-- Check you added Project ID to both files
-- Try http://localhost:3001/studio
+- **On Production (betpronetwork.com):** Just visit https://www.betpronetwork.com/studio and login
+- **On Local:** Make sure `npm run dev` is running, then visit http://localhost:3000/studio
+- Check you added Project ID to both files (.env.local and sanity.config.ts)
 
 **Login not working?**
 - Clear browser cache

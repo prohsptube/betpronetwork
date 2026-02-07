@@ -78,14 +78,6 @@ const legacyBlogPosts = [
     category: 'Beginners Guide',
     readTime: '15 min read',
   },
-  {
-    slug: 'online-casino-games-guide-uae',
-    title: 'Online Casino Games Guide for UAE Players',
-    excerpt: 'Discover the best online casino games available for UAE players. From slots to live dealer games, we cover everything.',
-    date: 'January 20, 2026',
-    category: 'Casino Guide',
-    readTime: '9 min read',
-  },
 ]
 
 export default async function BlogPage() {
