@@ -1,11 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { FaArrowLeft, FaSave, FaEye } from 'react-icons/fa'
 
-export default function EditorPage() {
+function EditorContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const postId = searchParams.get('id')
@@ -495,3 +495,12 @@ export default function EditorPage() {
     </div>
   )
 }
+
+export default function EditorPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="text-xl">Loading...</div></div>}>
+      <EditorContent />
+    </Suspense>
+  )
+}
+
