@@ -2,7 +2,7 @@
 
 ## ✅ Your Live Admin Panel
 
-**URL:** https://www.betpronetwork.com/studio
+**URL:** https://www.betpronetwork.com/admin
 
 **What you can do:**
 - ✅ Create new blog posts
@@ -18,7 +18,7 @@
 
 ### Step 1: Access Sanity Studio
 ```
-https://www.betpronetwork.com/studio
+https://www.betpronetwork.com/admin
 ```
 
 ### Step 2: Login
@@ -190,7 +190,7 @@ Search for your post URL
 
 ## ✏️ Editing Existing Posts
 
-1. Go to https://www.betpronetwork.com/studio
+1. Go to https://www.betpronetwork.com/admin
 2. Click **"Blog Posts"** in sidebar
 3. Click on the post you want to edit
 4. Make your changes
@@ -355,7 +355,7 @@ Your posts are automatically added to sitemap with priorities:
 
 | Action | URL |
 |--------|-----|
-| **Create Post** | https://www.betpronetwork.com/studio |
+| **Create Post** | https://www.betpronetwork.com/admin |
 | **View Blog** | https://www.betpronetwork.com/blog |
 | **Check Sitemap** | https://www.betpronetwork.com/sitemap.xml |
 | **Google Search Console** | https://search.google.com/search-console |
@@ -391,7 +391,7 @@ Before hitting "Publish":
 
 **Your Production Sanity Studio is ready to use!**
 
-Just go to: **https://www.betpronetwork.com/studio**
+Just go to: **https://www.betpronetwork.com/admin**
 
 Start writing amazing blog posts and watch your SEO rankings grow! 📈
 
@@ -406,4 +406,4 @@ Start writing amazing blog posts and watch your SEO rankings grow! 📈
 
 **Last Updated:** February 7, 2026  
 **Status:** ✅ Production Ready  
-**Studio URL:** https://www.betpronetwork.com/studio
+**Studio URL:** https://www.betpronetwork.com/admin

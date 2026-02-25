@@ -19,6 +19,7 @@ export async function getAllBlogPosts() {
   return client.fetch(
     `*[_type == "blogPost"] | order(publishedAt desc) {
       _id,
+      _updatedAt,
       title,
       slug,
       excerpt,
@@ -27,7 +28,8 @@ export async function getAllBlogPosts() {
       tags,
       author,
       publishedAt,
-      featured
+      featured,
+      "seoRegions": seo.pakistanSeo.targetRegions
     }`
   )
 }

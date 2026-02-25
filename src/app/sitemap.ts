@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { getAllBlogPosts } from '../../sanity/client'
 
-export const revalidate = 3600 // Revalidate sitemap every hour
+export const revalidate = 60 // Revalidate sitemap every minute for quick updates
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.betpronetwork.com'
@@ -10,8 +10,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let blogPosts: any[] = []
   try {
     blogPosts = await getAllBlogPosts()
+    console.log(`[Sitemap] Fetched ${blogPosts.length} blog posts from Sanity`)
   } catch (error) {
-    console.error('Error fetching blog posts for sitemap:', error)
+    console.error('[Sitemap] Error fetching blog posts:', error)
   }
 
   // Static pages with proper dates
@@ -30,43 +31,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]
 
-  // Legacy blog posts with proper last modified dates
-  const legacyBlogPosts: MetadataRoute.Sitemap = [
-    {
-      url: `${baseUrl}/blog/pakistan-vs-india-t20-preview`,
-      lastModified: new Date('2026-02-01'),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog/psl-2026-betting-guide`,
-      lastModified: new Date('2026-01-30'),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog/ipl-betting-tips-gulf-countries`,
-      lastModified: new Date('2026-01-28'),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog/cricket-betting-guide-beginners`,
-      lastModified: new Date('2026-01-25'),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-  ]
-
-  // Dynamic blog posts from Sanity with proper typing
+  // Dynamic blog posts from Sanity with enhanced SEO
   const dynamicBlogPosts: MetadataRoute.Sitemap = blogPosts
     .filter((post: any) => post.slug?.current) // Only include posts with valid slugs
-    .map((post: any) => ({
-      url: `${baseUrl}/blog/${post.slug.current}`,
-      lastModified: post.publishedAt ? new Date(post.publishedAt) : new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: post.featured ? 0.9 : 0.8,
-    }))
+    .map((post: any) => {
+      // Use _updatedAt for lastModified (more accurate than publishedAt for content changes)
+      const lastModified = post._updatedAt 
+        ? new Date(post._updatedAt) 
+        : post.publishedAt 
+        ? new Date(post.publishedAt) 
+        : new Date()
+      
+      // Higher priority for featured posts and Pakistan-targeted posts
+      let priority = 0.8
+      if (post.featured) priority = 0.9
+      if (post.seoRegions && post.seoRegions.length > 0) priority = 0.85
+      
+      console.log(`[Sitemap] Adding post: ${post.slug.current} (${lastModified.toISOString()})`)
+      
+      return {
+        url: `${baseUrl}/blog/${post.slug.current}`,
+        lastModified,
+        changeFrequency: 'weekly' as const,
+        priority,
+      }
+    })
 
-  return [...staticPages, ...legacyBlogPosts, ...dynamicBlogPosts]
+  console.log(`[Sitemap] Total URLs: ${staticPages.length + dynamicBlogPosts.length}`)
+  return [...staticPages, ...dynamicBlogPosts]
 }

@@ -10,7 +10,7 @@ export default defineConfig({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ol4jd4aa',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
 
-  basePath: '/studio',
+  basePath: '/admin',
 
   plugins: [deskTool(), visionTool()],
 

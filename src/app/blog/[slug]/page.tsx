@@ -29,32 +29,61 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
   }
 
-  const pageUrl = `https://www.betpronetwork.com/blog/${params.slug}`
-  const imageUrl = post.coverImage 
+  const pageUrl = post.seo?.canonicalUrl || `https://www.betpronetwork.com/blog/${params.slug}`
+  
+  // Smart image selection: OG image > Twitter image > Cover image > Default
+  const ogImageUrl = post.seo?.openGraph?.ogImage 
+    ? urlFor(post.seo.openGraph.ogImage).width(1200).height(630).url()
+    : post.coverImage 
     ? urlFor(post.coverImage).width(1200).height(630).url()
     : 'https://www.betpronetwork.com/logo.png'
 
-  // Use SEO fields from Sanity CMS if available, with intelligent fallbacks
-  const metaTitle = post.seo?.metaTitle || `${post.title} - BetPro Network Blog`
+  const twitterImageUrl = post.seo?.twitterCard?.twitterImage
+    ? urlFor(post.seo.twitterCard.twitterImage).width(1200).height(600).url()
+    : ogImageUrl
+
+  // Enhanced SEO with comprehensive fallbacks
+  const metaTitle = post.seo?.metaTitle || `${post.title} - BetPro Network`
   const metaDescription = post.seo?.metaDescription || post.excerpt || `Read ${post.title} on BetPro Network. Latest cricket news, betting tips, and expert analysis for Pakistan & Gulf countries.`
-  const keywords = post.seo?.keywords?.join(', ') || post.tags?.join(', ') || 'cricket betting, online betting Pakistan, sports betting'
+  
+  // Combine all keywords: focus keyword + additional keywords + Pakistan keywords + tags
+  const allKeywords = [
+    post.seo?.focusKeyword,
+    ...(post.seo?.keywords || []),
+    ...(post.seo?.pakistanSeo?.pakistanKeywords || []),
+    ...(post.tags || [])
+  ].filter(Boolean).join(', ')
+
+  // Open Graph settings
+  const ogTitle = post.seo?.openGraph?.ogTitle || post.seo?.metaTitle || post.title
+  const ogDescription = post.seo?.openGraph?.ogDescription || metaDescription
+  const ogType = post.seo?.openGraph?.ogType || 'article'
+
+  // Twitter Card settings
+  const twitterTitle = post.seo?.twitterCard?.twitterTitle || post.seo?.metaTitle || post.title
+  const twitterDescription = post.seo?.twitterCard?.twitterDescription || metaDescription
+  const twitterCardType = post.seo?.twitterCard?.twitterCardType || 'summary_large_image'
+
+  // Robots settings
+  const noIndex = post.seo?.advanced?.noIndex || false
+  const noFollow = post.seo?.advanced?.noFollow || false
 
   return {
     title: metaTitle,
     description: metaDescription,
-    keywords: keywords,
+    keywords: allKeywords || 'cricket betting, online betting Pakistan, sports betting',
     authors: [{ name: post.author || 'BetPro Network' }],
     openGraph: {
-      title: post.seo?.metaTitle || post.title,
-      description: metaDescription,
+      title: ogTitle,
+      description: ogDescription,
       url: pageUrl,
-      type: 'article',
+      type: ogType as 'article' | 'website',
       publishedTime: post.publishedAt,
       modifiedTime: post._updatedAt,
       authors: [post.author || 'BetPro Network'],
       images: [
         {
-          url: imageUrl,
+          url: ogImageUrl,
           width: 1200,
           height: 630,
           alt: post.title,
@@ -64,10 +93,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       locale: 'en_US',
     },
     twitter: {
-      card: 'summary_large_image',
-      title: post.seo?.metaTitle || post.title,
-      description: metaDescription,
-      images: [imageUrl],
+      card: twitterCardType as 'summary' | 'summary_large_image',
+      title: twitterTitle,
+      description: twitterDescription,
+      images: [twitterImageUrl],
       creator: '@betpronetwork',
       site: '@betpronetwork',
     },
@@ -75,11 +104,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       canonical: pageUrl,
     },
     robots: {
-      index: true,
-      follow: true,
+      index: !noIndex,
+      follow: !noFollow,
       googleBot: {
-        index: true,
-        follow: true,
+        index: !noIndex,
+        follow: !noFollow,
         'max-video-preview': -1,
         'max-image-preview': 'large',
         'max-snippet': -1,
@@ -103,12 +132,18 @@ export default async function CMSBlogPost({ params }: PageProps) {
 
   // Use SEO fields with intelligent fallbacks for schema
   const schemaDescription = post.seo?.metaDescription || post.excerpt || `Read ${post.title} on BetPro Network`
-  const schemaKeywords = post.seo?.keywords?.join(', ') || post.tags?.join(', ')
+  const allSchemaKeywords = [
+    post.seo?.focusKeyword,
+    ...(post.seo?.keywords || []),
+    ...(post.seo?.pakistanSeo?.pakistanKeywords || []),
+    ...(post.tags || [])
+  ].filter(Boolean).join(', ')
 
-  // Article Schema for SEO
+  // Enhanced Article Schema with comprehensive SEO
+  const articleType = post.seo?.structuredData?.articleType || 'BlogPosting'
   const articleSchema = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
+    "@type": articleType,
     "headline": post.seo?.metaTitle || post.title,
     "description": schemaDescription,
     "image": post.coverImage ? urlFor(post.coverImage).width(1200).height(630).url() : "https://www.betpronetwork.com/logo.png",
@@ -128,13 +163,29 @@ export default async function CMSBlogPost({ params }: PageProps) {
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://www.betpronetwork.com/blog/${params.slug}`
+      "@id": post.seo?.canonicalUrl || `https://www.betpronetwork.com/blog/${params.slug}`
     },
-    "keywords": schemaKeywords,
+    "keywords": allSchemaKeywords,
     "articleSection": post.category || "Betting News",
     "inLanguage": "en-US",
-    "url": `https://www.betpronetwork.com/blog/${params.slug}`
+    "url": post.seo?.canonicalUrl || `https://www.betpronetwork.com/blog/${params.slug}`
   }
+
+  // FAQ Schema (if enabled)
+  const faqSchema = post.seo?.structuredData?.enableFAQ && post.seo?.structuredData?.faqItems?.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": post.seo.structuredData.faqItems.map((item: any) => ({
+          "@type": "Question",
+          "name": item.question,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": item.answer
+          }
+        }))
+      }
+    : null
 
   const components = {
     block: {
@@ -205,6 +256,14 @@ export default async function CMSBlogPost({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
+      
+      {/* FAQ Schema (if enabled) */}
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       
       {/* Hero Section */}
       <section className="copilot-bg py-20">

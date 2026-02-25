@@ -108,6 +108,26 @@ export default function RootLayout({
             `,
           }}
         />
+        
+        {/* Pakistan & Gulf Geo-Targeting */}
+        <meta name="geo.region" content="PK" />
+        <meta name="geo.placename" content="Pakistan" />
+        <meta name="geo.position" content="30.3753;69.3451" />
+        <meta name="ICBM" content="30.3753, 69.3451" />
+        
+        {/* Enhanced Mobile & Regional SEO */}
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="format-detection" content="telephone=yes" />
+        
+        {/* Language & Region Targeting */}
+        <meta httpEquiv="content-language" content="en-PK" />
+        <link rel="alternate" hrefLang="en-pk" href="https://www.betpronetwork.com" />
+        <link rel="alternate" hrefLang="en-ae" href="https://www.betpronetwork.com" />
+        <link rel="alternate" hrefLang="en-sa" href="https://www.betpronetwork.com" />
+        <link rel="alternate" hrefLang="en" href="https://www.betpronetwork.com" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.betpronetwork.com" />
       </head>
       <body className={inter.className}>
         {/* Google Tag Manager (noscript) */}

@@ -173,7 +173,7 @@ vercel --prod
 ## 🎨 Update Blog Content
 
 ### From Admin Panel:
-1. Go to: `https://betpronetwork.vercel.app/studio`
+1. Go to: `https://betpronetwork.vercel.app/admin`
 2. Login with Sanity
 3. Add/Edit posts
 4. Publish
@@ -258,7 +258,7 @@ https://wa.me/923000539152?text=Check%20out%20BetPro%20Network:%20https://betpro
 - Verify CORS settings in Sanity
 
 ### Admin Panel Not Loading?
-- Add `/studio` to CORS in Sanity
+- Add `/admin` to CORS in Sanity
 - Clear browser cache
 - Check environment variables
 
@@ -310,7 +310,7 @@ Your BetPro Network website is now:
 
 ## 🎉 You're Live!
 
-**Admin Panel:** `https://yourdomain.vercel.app/studio`  
+**Admin Panel:** `https://yourdomain.vercel.app/admin`  
 **Website:** `https://yourdomain.vercel.app`  
 **Blog:** `https://yourdomain.vercel.app/blog`
 

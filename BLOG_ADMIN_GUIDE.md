@@ -156,7 +156,7 @@ sanity init
 ```
 
 Then I'll create:
-- Admin dashboard at `/studio`
+- Admin dashboard at `/admin`
 - Automatic blog post generation
 - Image uploads
 - Rich text editor
@@ -307,7 +307,7 @@ Every post should have:
 If you want a visual admin panel like WordPress, I can integrate Sanity CMS in 2-3 hours:
 
 **You'll get:**
-- Dashboard at yourdomain.com/studio
+- Dashboard at yourdomain.com/admin
 - Rich text editor
 - Image uploads
 - Preview system

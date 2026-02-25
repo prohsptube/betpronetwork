@@ -2,7 +2,7 @@
 
 ## 🎯 VERIFIED: All New Blog Posts Are Fully SEO Optimized!
 
-When you create a new blog post via Sanity CMS Admin Panel (https://www.betpronetwork.com/studio), **ALL SEO elements are automatically configured** with ZERO manual work required!
+When you create a new blog post via Sanity CMS Admin Panel (https://www.betpronetwork.com/admin), **ALL SEO elements are automatically configured** with ZERO manual work required!
 
 ---
 
@@ -224,7 +224,7 @@ Your new blog posts automatically have:
 
 ### Step 1: Go to Sanity Studio
 ```
-https://www.betpronetwork.com/studio
+https://www.betpronetwork.com/admin
 ```
 
 ### Step 2: Click "Create" → "Blog Post"

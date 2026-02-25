@@ -16,24 +16,6 @@ const nextConfig = {
       },
     ],
   },
-  // Force HTTPS redirects for SEO
-  async redirects() {
-    return [
-      // Redirect HTTP to HTTPS (handled by hosting provider in production)
-      // But add trailing slash redirects for consistency
-      {
-        source: '/:path*/',
-        has: [
-          {
-            type: 'host',
-            value: '(?<host>.*)',
-          },
-        ],
-        destination: '/:path*',
-        permanent: true,
-      },
-    ]
-  },
   async headers() {
     return [
       {

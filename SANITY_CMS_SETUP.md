@@ -49,7 +49,7 @@ Once you've added your Project ID:
 
 **Open admin panel:**
 ```
-https://www.betpronetwork.com/studio
+https://www.betpronetwork.com/admin
 ```
 
 **Login** with your Sanity account
@@ -69,7 +69,7 @@ If you want to test locally before publishing:
 
 2. **Open local admin panel:**
    ```
-   http://localhost:3000/studio
+   http://localhost:3000/admin
    ```
 
 3. **Login** with your Sanity account
@@ -80,7 +80,7 @@ If you want to test locally before publishing:
 
 ### From the Admin Panel:
 
-1. Go to https://www.betpronetwork.com/studio
+1. Go to https://www.betpronetwork.com/admin
 2. Click **"Blog Posts"** in the sidebar
 3. Click **"+ Create"** button
 4. Fill in:
@@ -118,7 +118,7 @@ If you want to test locally before publishing:
 
 ### ✅ Installed & Ready:
 - Sanity CMS packages
-- Admin panel at `/studio`
+- Admin panel at `/admin`
 - Blog post schema
 - Image uploads
 - Rich text editor
@@ -137,12 +137,12 @@ Your existing blog posts are still file-based. You can:
 
 **✅ Production (Use This for Managing Blog Posts):**
 ```
-https://www.betpronetwork.com/studio
+https://www.betpronetwork.com/admin
 ```
 
 **Local Development (For Testing Only):**
 ```
-http://localhost:3000/studio
+http://localhost:3000/admin
 ```
 
 **Login:** Use your Sanity account (created at sanity.io)
@@ -211,7 +211,7 @@ When you deploy to Vercel/Netlify:
 
 2. **Admin Panel URL:**
    ```
-   https://yourdomain.com/studio
+   https://yourdomain.com/admin
    ```
 
 3. **CORS Settings:**
@@ -265,9 +265,9 @@ Once you add your Project ID and create posts in CMS, you can:
 
 ### Common Issues:
 
-**Can't access /studio?**
-- **On Production (betpronetwork.com):** Just visit https://www.betpronetwork.com/studio and login
-- **On Local:** Make sure `npm run dev` is running, then visit http://localhost:3000/studio
+**Can't access /admin?**
+- **On Production (betpronetwork.com):** Just visit https://www.betpronetwork.com/admin and login
+- **On Local:** Make sure `npm run dev` is running, then visit http://localhost:3000/admin
 - Check you added Project ID to both files (.env.local and sanity.config.ts)
 
 **Login not working?**
@@ -287,7 +287,7 @@ Once you add your Project ID and create posts in CMS, you can:
 1. ✅ Sanity CMS installed
 2. ⏳ Create account at sanity.io
 3. ⏳ Add Project ID to config files
-4. ⏳ Access admin at /studio
+4. ⏳ Access admin at /admin
 5. ⏳ Create your first blog post
 
 **Next:** Get your Project ID and start posting!
@@ -296,7 +296,7 @@ Once you add your Project ID and create posts in CMS, you can:
 
 ## 📝 Quick Reference
 
-**Admin Panel:** http://localhost:3001/studio  
+**Admin Panel:** http://localhost:3001/admin  
 **Sanity Dashboard:** https://www.sanity.io/manage  
 **Documentation:** https://www.sanity.io/docs  
 

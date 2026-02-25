@@ -147,7 +147,7 @@ robots: {
 
 ### Test Procedure:
 
-1. **Create a test blog post in Sanity Studio (https://www.betpronetwork.com/studio):**
+1. **Create a test blog post in Sanity Studio (https://www.betpronetwork.com/admin):**
    ```
    Title: "Test Post - Delete After Verification"
    Slug: test-post-delete-after
@@ -241,7 +241,7 @@ Before deploying to production:
 1. ✅ Review this document - understand what's automatic
 2. ✅ Read [NEW_BLOG_POST_SEO_CHECKLIST.md](NEW_BLOG_POST_SEO_CHECKLIST.md) - learn how to create perfect posts
 3. ✅ Changes already deployed to production ✓
-4. ✅ Create a test post via Sanity Studio (https://www.betpronetwork.com/studio)
+4. ✅ Create a test post via Sanity Studio (https://www.betpronetwork.com/admin)
 5. ✅ Verify SEO elements (follow test procedure above)
 6. ✅ Request indexing in Google Search Console
 
