@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { FaPlus, FaEdit, FaTrash, FaEye, FaSignOutAlt } from 'react-icons/fa'
+import { FaPlus, FaEdit, FaTrash, FaEye, FaSignOutAlt, FaCog } from 'react-icons/fa'
 
 interface BlogPost {
   _id: string
@@ -85,9 +85,9 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-16">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
@@ -98,6 +98,12 @@ export default function AdminDashboard() {
               </div>
             </div>
             <div className="flex items-center gap-4">
+              <Link
+                href="/admin/settings"
+                className="flex items-center gap-2 text-gray-600 hover:text-purple-600 transition-colors"
+              >
+                <FaCog /> Settings
+              </Link>
               <Link
                 href="/"
                 target="_blank"
