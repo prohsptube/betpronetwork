@@ -347,7 +347,19 @@ export default async function CMSBlogPost({ params }: PageProps) {
       {/* Article Content */}
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="prose prose-lg max-w-none">
-          <PortableText value={post.content} components={components} />
+          {/* Handle both plain text content (from admin panel) and Portable Text (from Sanity Studio) */}
+          {typeof post.content === 'string' ? (
+            // Render plain text content with proper formatting
+            <div className="text-lg text-gray-700 leading-relaxed whitespace-pre-wrap">
+              {post.content}
+            </div>
+          ) : Array.isArray(post.content) && post.content.length > 0 ? (
+            // Render Portable Text content
+            <PortableText value={post.content} components={components} />
+          ) : (
+            // Fallback for empty or invalid content
+            <p className="text-gray-500 italic">No content available.</p>
+          )}
         </div>
 
         {/* Tags */}
