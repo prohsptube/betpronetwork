@@ -23,6 +23,7 @@ function EditorContent() {
   const [tags, setTags] = useState('')
   const [author, setAuthor] = useState('BetPro Team')
   const [featured, setFeatured] = useState(false)
+  const [featureImageUrl, setFeatureImageUrl] = useState('')
   
   // SEO fields
   const [metaTitle, setMetaTitle] = useState('')
@@ -63,6 +64,7 @@ function EditorContent() {
       setTags(post.tags?.join(', ') || '')
       setAuthor(post.author || 'BetPro Team')
       setFeatured(post.featured || false)
+      setFeatureImageUrl(post.coverImage || '')
       
       if (post.seo) {
         setMetaTitle(post.seo.metaTitle || '')
@@ -109,6 +111,7 @@ function EditorContent() {
         slug: { _type: 'slug', current: slug },
         excerpt,
         content,
+        coverImage: featureImageUrl || undefined,
         category,
         tags: tags.split(',').map(t => t.trim()).filter(Boolean),
         author,
@@ -226,7 +229,7 @@ function EditorContent() {
                   type="text"
                   value={title}
                   onChange={(e) => handleTitleChange(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"
                   placeholder="Enter post title"
                   required
                 />
@@ -240,7 +243,7 @@ function EditorContent() {
                   type="text"
                   value={slug}
                   onChange={(e) => setSlug(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent font-mono text-sm"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent font-mono text-sm text-black"
                   placeholder="post-url-slug"
                   required
                 />
@@ -257,7 +260,7 @@ function EditorContent() {
                   value={excerpt}
                   onChange={(e) => setExcerpt(e.target.value)}
                   rows={3}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"
                   placeholder="Brief description of the post"
                 />
               </div>
@@ -270,11 +273,39 @@ function EditorContent() {
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   rows={15}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent font-mono text-sm"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent font-mono text-sm text-black"
                   placeholder="Write your post content here..."
                 />
                 <p className="text-xs text-gray-500 mt-1">
                   Tip: Use Markdown formatting for better content structure
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Feature Image URL
+                </label>
+                <input
+                  type="url"
+                  value={featureImageUrl}
+                  onChange={(e) => setFeatureImageUrl(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"
+                  placeholder="https://example.com/image.jpg"
+                />
+                {featureImageUrl && (
+                  <div className="mt-2">
+                    <img
+                      src={featureImageUrl}
+                      alt="Feature image preview"
+                      className="max-w-xs h-auto rounded-lg border border-gray-300"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none'
+                      }}
+                    />
+                  </div>
+                )}
+                <p className="text-xs text-gray-500 mt-1">
+                  Enter the full URL of your feature image
                 </p>
               </div>
 
@@ -286,7 +317,7 @@ function EditorContent() {
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"
                   >
                     <option value="">Select category</option>
                     <option value="cricket">Cricket</option>
@@ -306,7 +337,7 @@ function EditorContent() {
                     type="text"
                     value={author}
                     onChange={(e) => setAuthor(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"
                   />
                 </div>
               </div>
@@ -319,7 +350,7 @@ function EditorContent() {
                   type="text"
                   value={tags}
                   onChange={(e) => setTags(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"
                   placeholder="cricket, betting, PSL, IPL"
                 />
               </div>
@@ -352,7 +383,7 @@ function EditorContent() {
                   type="text"
                   value={metaTitle}
                   onChange={(e) => setMetaTitle(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"
                   placeholder="Leave empty to use post title"
                   maxLength={60}
                 />
@@ -369,7 +400,7 @@ function EditorContent() {
                   value={metaDescription}
                   onChange={(e) => setMetaDescription(e.target.value)}
                   rows={3}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"
                   placeholder="Leave empty to use excerpt"
                   maxLength={160}
                 />
@@ -387,7 +418,7 @@ function EditorContent() {
                     type="text"
                     value={focusKeyword}
                     onChange={(e) => setFocusKeyword(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"
                     placeholder="e.g., cricket betting Pakistan"
                   />
                 </div>
@@ -400,7 +431,7 @@ function EditorContent() {
                     type="text"
                     value={keywords}
                     onChange={(e) => setKeywords(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"
                     placeholder="PSL, IPL, betting tips"
                   />
                 </div>
@@ -421,7 +452,7 @@ function EditorContent() {
                   type="text"
                   value={urduTitle}
                   onChange={(e) => setUrduTitle(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"
                   placeholder="پاکستان کرکٹ بیٹنگ"
                   dir="rtl"
                 />
@@ -435,7 +466,7 @@ function EditorContent() {
                   value={urduDescription}
                   onChange={(e) => setUrduDescription(e.target.value)}
                   rows={2}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"
                   dir="rtl"
                 />
               </div>
@@ -467,7 +498,7 @@ function EditorContent() {
                   type="text"
                   value={pakistanKeywords}
                   onChange={(e) => setPakistanKeywords(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"
                   placeholder="PSL betting, Pakistan cricket, اردو keywords"
                 />
               </div>

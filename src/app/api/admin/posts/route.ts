@@ -9,7 +9,7 @@ export async function GET() {
         title,
         slug,
         excerpt,
-        "coverImage": coverImage.asset->url,
+        coverImage,
         category,
         tags,
         author,

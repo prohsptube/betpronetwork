@@ -16,6 +16,28 @@ interface BlogPost {
   isFromCMS?: boolean
 }
 
+// Helper function to get image URL (handles both Sanity images and plain URLs)
+function getImageUrl(coverImage: any): string | null {
+  if (!coverImage) return null
+  
+  // If it's a plain URL string
+  if (typeof coverImage === 'string') {
+    return coverImage
+  }
+  
+  // If it's a Sanity image object
+  if (coverImage._type === 'image' || coverImage.asset) {
+    try {
+      return urlFor(coverImage).width(600).height(400).url()
+    } catch (error) {
+      console.error('Error processing Sanity image:', error)
+      return null
+    }
+  }
+  
+  return null
+}
+
 interface BlogGridProps {
   initialPosts: BlogPost[]
 }
@@ -37,28 +59,31 @@ export default function BlogGrid({ initialPosts }: BlogGridProps) {
 
       {/* Blog Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {displayedPosts.map((post: BlogPost) => (
-          <Link 
-            key={post.slug}
-            href={`/blog/${post.slug}`}
-            className="group"
-          >
-            <article className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all transform hover:-translate-y-2">
-              {post.coverImage ? (
-                <div className="h-48 relative">
-                  <Image
-                    src={urlFor(post.coverImage).width(600).height(400).url()}
-                    alt={post.title}
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className="inline-block bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold text-purple-600">
-                      {post.category}
-                    </span>
+        {displayedPosts.map((post: BlogPost) => {
+          const imageUrl = getImageUrl(post.coverImage)
+          
+          return (
+            <Link 
+              key={post.slug}
+              href={`/blog/${post.slug}`}
+              className="group"
+            >
+              <article className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all transform hover:-translate-y-2">
+                {imageUrl ? (
+                  <div className="h-48 relative">
+                    <Image
+                      src={imageUrl}
+                      alt={post.title}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute top-4 left-4">
+                      <span className="inline-block bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold text-purple-600">
+                        {post.category}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              ) : (
+                ) : (
                 <div className="h-48 bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
                   <div className="text-white text-center p-6">
                     <span className="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold mb-3">
@@ -94,7 +119,8 @@ export default function BlogGrid({ initialPosts }: BlogGridProps) {
               </div>
             </article>
           </Link>
-        ))}
+          )
+        })}
       </div>
 
       {/* Load More Button */}

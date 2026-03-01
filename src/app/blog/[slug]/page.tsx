@@ -9,6 +9,30 @@ import Breadcrumbs from '../../../components/Breadcrumbs'
 
 export const revalidate = 60
 
+// Helper function to get image URL (handles both Sanity images and plain URLs)
+function getImageUrl(coverImage: any, width: number = 1200, height: number = 630): string {
+  if (!coverImage) {
+    return 'https://www.betpronetwork.com/logo.png'
+  }
+  
+  // If it's a plain URL string
+  if (typeof coverImage === 'string') {
+    return coverImage
+  }
+  
+  // If it's a Sanity image object
+  if (coverImage._type === 'image' || coverImage.asset) {
+    try {
+      return urlFor(coverImage).width(width).height(height).url()
+    } catch (error) {
+      console.error('Error processing Sanity image:', error)
+      return 'https://www.betpronetwork.com/logo.png'
+    }
+  }
+  
+  return 'https://www.betpronetwork.com/logo.png'
+}
+
 interface PageProps {
   params: {
     slug: string
@@ -33,13 +57,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   
   // Smart image selection: OG image > Twitter image > Cover image > Default
   const ogImageUrl = post.seo?.openGraph?.ogImage 
-    ? urlFor(post.seo.openGraph.ogImage).width(1200).height(630).url()
+    ? getImageUrl(post.seo.openGraph.ogImage, 1200, 630)
     : post.coverImage 
-    ? urlFor(post.coverImage).width(1200).height(630).url()
+    ? getImageUrl(post.coverImage, 1200, 630)
     : 'https://www.betpronetwork.com/logo.png'
 
   const twitterImageUrl = post.seo?.twitterCard?.twitterImage
-    ? urlFor(post.seo.twitterCard.twitterImage).width(1200).height(600).url()
+    ? getImageUrl(post.seo.twitterCard.twitterImage, 1200, 600)
     : ogImageUrl
 
   // Enhanced SEO with comprehensive fallbacks
@@ -146,7 +170,7 @@ export default async function CMSBlogPost({ params }: PageProps) {
     "@type": articleType,
     "headline": post.seo?.metaTitle || post.title,
     "description": schemaDescription,
-    "image": post.coverImage ? urlFor(post.coverImage).width(1200).height(630).url() : "https://www.betpronetwork.com/logo.png",
+    "image": getImageUrl(post.coverImage, 1200, 630),
     "datePublished": post.publishedAt,
     "dateModified": post._updatedAt || post.publishedAt,
     "author": {
@@ -235,17 +259,20 @@ export default async function CMSBlogPost({ params }: PageProps) {
       ),
     },
     types: {
-      image: ({ value }: any) => (
-        <div className="my-10 rounded-2xl overflow-hidden">
-          <Image
-            src={urlFor(value).width(1200).url()}
-            alt={value.alt || 'Blog image'}
-            width={1200}
-            height={675}
-            className="w-full h-auto"
-          />
-        </div>
-      ),
+      image: ({ value }: any) => {
+        const imageSrc = getImageUrl(value, 1200, 675)
+        return (
+          <div className="my-10 rounded-2xl overflow-hidden">
+            <Image
+              src={imageSrc}
+              alt={value.alt || 'Blog image'}
+              width={1200}
+              height={675}
+              className="w-full h-auto"
+            />
+          </div>
+        )
+      },
     },
   }
 
@@ -306,7 +333,7 @@ export default async function CMSBlogPost({ params }: PageProps) {
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10">
           <div className="rounded-2xl overflow-hidden shadow-2xl">
             <Image
-              src={urlFor(post.coverImage).width(1200).url()}
+              src={getImageUrl(post.coverImage, 1200, 675)}
               alt={post.title}
               width={1200}
               height={675}
