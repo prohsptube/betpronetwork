@@ -76,6 +76,7 @@ export default function BlogGrid({ initialPosts }: BlogGridProps) {
                       alt={post.title}
                       fill
                       className="object-cover"
+                      unoptimized={typeof post.coverImage === 'string'}
                     />
                     <div className="absolute top-4 left-4">
                       <span className="inline-block bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold text-purple-600">

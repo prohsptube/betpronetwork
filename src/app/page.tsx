@@ -13,6 +13,28 @@ export const metadata: Metadata = {
 
 export const revalidate = 60
 
+// Helper function to get image URL (handles both Sanity images and plain URLs)
+function getImageUrl(coverImage: any, width: number = 600, height: number = 400): string | null {
+  if (!coverImage) return null
+  
+  // If it's a plain URL string
+  if (typeof coverImage === 'string') {
+    return coverImage
+  }
+  
+  // If it's a Sanity image object
+  if (coverImage._type === 'image' || coverImage.asset) {
+    try {
+      return urlFor(coverImage).width(width).height(height).url()
+    } catch (error) {
+      console.error('Error processing Sanity image:', error)
+      return null
+    }
+  }
+  
+  return null
+}
+
 async function getLatestPosts() {
   try {
     const posts = await getAllBlogPosts()
@@ -680,35 +702,39 @@ export default async function Home() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {latestPosts.map((post: any) => (
-              <Link key={post._id} href={`/blog/${post.slug.current}`} className="group">
-                <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow">
-                  {post.coverImage ? (
-                    <div className="h-48 relative">
-                      <Image
-                        src={urlFor(post.coverImage).width(600).height(400).url()}
-                        alt={post.title}
-                        fill
-                        className="object-cover"
-                      />
+            {latestPosts.map((post: any) => {
+              const imageUrl = getImageUrl(post.coverImage, 600, 400)
+              return (
+                <Link key={post._id} href={`/blog/${post.slug.current}`} className="group">
+                  <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow">
+                    {imageUrl ? (
+                      <div className="h-48 relative">
+                        <Image
+                          src={imageUrl}
+                          alt={post.title}
+                          fill
+                          className="object-cover"
+                          unoptimized={typeof post.coverImage === 'string'}
+                        />
+                      </div>
+                    ) : (
+                      <div className="h-48 bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center">
+                        <FaBaseballBall className="text-white text-6xl" />
+                      </div>
+                    )}
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-colors line-clamp-2">
+                        {post.title}
+                      </h3>
+                      <p className="text-gray-600 mb-4 line-clamp-3">
+                        {post.excerpt || 'Read the full article for more details.'}
+                      </p>
+                      <span className="text-purple-600 font-semibold">Read More →</span>
                     </div>
-                  ) : (
-                    <div className="h-48 bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center">
-                      <FaBaseballBall className="text-white text-6xl" />
-                    </div>
-                  )}
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-colors line-clamp-2">
-                      {post.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4 line-clamp-3">
-                      {post.excerpt || 'Read the full article for more details.'}
-                    </p>
-                    <span className="text-purple-600 font-semibold">Read More →</span>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              )
+            })}
           </div>
         </div>
       </section>
